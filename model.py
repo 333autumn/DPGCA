@@ -10,8 +10,8 @@ class SelfAttentionEncoder(nn.Module):
 
     def forward(self, x):
         # (N, L, D)
-        a = self.attn(x)  # (N, L, 1)
-        x = (x * a).sum(dim=1)  # (N, D)
+        a = self.attn(x)  
+        x = (x * a).sum(dim=1)  
         return x
 
 
@@ -31,11 +31,10 @@ class AttentionLayer(nn.Module):
 
     def forward(self, x):
         # (N, S, L, D) batch_size,max_sent_num,max_sent_len,embedding_size
-        x = x.permute(1, 0, 2, 3)  # (S, N, L, D) max_sent_num,batch_size,max_sent_len,embedding_size
-        # 第一层注意力处理
+        x = x.permute(1, 0, 2, 3)  
         x = torch.cat([self.attn1(_).unsqueeze(0) for _ in x])  # (S, N, D)
-        s = x.permute(1, 0, 2)  # (N, S, D)
-        c = self.biLSTM(s)[0]  # (N, S, D)
-        # c = self.linear(c)  # 将 hidden_size*2 维度映射到 D=768
-        g = self.attn2(c)  # (N, D)
+        s = x.permute(1, 0, 2)  
+        c = self.biLSTM(s)[0]  
+        # c = self.linear(c)
+        g = self.attn2(c)  
         return s, g
