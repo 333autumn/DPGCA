@@ -1,6 +1,4 @@
-# @Time   : 2022/4/10
-# @Author : Chen Yang
-# @Email  : flust@ruc.edu.cn
+
 
 """
 data_round1
